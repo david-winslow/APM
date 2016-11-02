@@ -1,0 +1,45 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading">
+       {{pageTitle}}
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-2">Filter by:</div>
+            <div class="col-md-4"><input [(ngModel)] ="listFilter" type="text" /></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">Filtered by: {{listFilter}} </div>
+        </div>
+
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped" *ngIf="products && products.length">
+            <thead>
+            <tr>
+                <th><button (click) ="toggleImage()" class="btn btn-primary">{{showImage ? 'Hide' : 'Show'}}</button></th>
+                <th>Product</th>
+                <th>Code</th>
+                <th>Available</th>
+                <th>Price</th>
+                <th>5 star rating</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let product of products | productFilter :listFilter">
+                <td>
+                    <img *ngIf="showImage" [src]= "product.imageUrl" [style.width.px] = 'imageWidth' [style.height.px] = 'imageWidth' />
+                </td>
+                <td>{{product.productName}}</td>
+                <td>{{product.productCode}}</td>
+                <td>{{product.releaseDate}}</td>
+                <td>{{product.price | currency:'ZAR':true: "1.2-2" }}</td>
+                <td>
+                    <ai-star [rating] ="product.starRating"  (ratingClicked) ='onRatingClicked($event)' ></ai-star>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        
+
+    </div>
+</div>
